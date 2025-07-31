@@ -1,0 +1,83 @@
+<!-- pesquisa.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pesquisa - Nome do App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+background:
+      radial-gradient(#1f2c5d 49%,#0000 50%) calc(100px/-2) calc(100px/2),
+      repeating-conic-gradient(from 45deg,#ffffff 0 25%,#0000 0 50%)
+        calc(100px/2) calc(100px/2),
+      radial-gradient(#1f2c5d 49%,#0000 50%),radial-gradient(#1f2c5d 49%,#0000 50%) 100px 100px #ffffff;
+background-size: calc(2*100px) calc(2*100px);
+
+  }
+</style>
+
+</head>
+<body class="bg-gray-100/60 flex items-center justify-center min-h-screen p-4 ">
+  <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-3xl">
+
+    <!-- Logo no topo -->
+    <div class="flex justify-center mb-6">
+      <img src="logo.png" alt="Logo GDF" class="h-20 w-auto">
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">
+      Ajude a escolher o nome do novo App do Servidor GDF
+    </h2>
+
+    <p class="text-gray-700 text-sm mb-6">
+      Quando você enviar este formulário, ele não coletará automaticamente seus detalhes, como nome e endereço de email, a menos que você mesmo os forneça.
+    </p>
+
+    <p class="text-gray-800 mb-6">
+      Um novo aplicativo está sendo desenvolvido especialmente para os servidores públicos do Governo do Distrito Federal. Com ele, será possível acessar a Identidade Funcional Digital, consultar contracheques, férias e abonos, assim como abrir chamados para os portfólios de serviços de TI ou Infraestrutura Predial, tudo isso direto no celular, de forma simples, segura e prática.
+    </p>
+
+    <p class="text-gray-800 mb-6">
+      Contempla também a integração com o SIGEST - Sistema de Gestão de Estagiários e com o Clube de Descontos.
+    </p>
+
+    <p class="text-gray-800 mb-6">
+      E como esse app é feito para você, nada mais justo do que você também ajudar a dar um nome a ele! Escolha abaixo o nome que você acha que mais combina com essa nova ferramenta de modernização e valorização dos servidores do GDF. 🗓️ Você pode votar até o dia <strong>01 de agosto de 2025</strong>. Contamos com a sua participação!
+    </p>
+
+    <form action="#" method="POST" class="space-y-6">
+      <fieldset>
+        <legend class="text-base font-semibold text-gray-800 mb-4">1. Então, qual nome você escolhe para o App?</legend>
+        <div class="space-y-3">
+          <label class="flex items-start space-x-2">
+            <input type="radio" name="nome_app" value="ConectaServ" required class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500" />
+            <span><strong>ConectaServ</strong> - Sua vida funcional na palma da mão</span>
+          </label>
+          <label class="flex items-start space-x-2">
+            <input type="radio" name="nome_app" value="GDF Servidor" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500" />
+            <span><strong>GDF Servidor</strong> - Feito para quem trabalha pelo DF</span>
+          </label>
+          <label class="flex items-start space-x-2">
+            <input type="radio" name="nome_app" value="ServiGDF" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500" />
+            <span><strong>ServiGDF</strong> - O aplicativo do servidor do GDF</span>
+          </label>
+          <label class="flex items-start space-x-2">
+            <input type="radio" name="nome_app" value="GDFácil" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500" />
+            <span><strong>GDFácil</strong> - Mais agilidade para a vida do servidor do GDF</span>
+          </label>
+          <label class="flex items-start space-x-2">
+            <input type="radio" name="nome_app" value="MeuGDF" class="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500" />
+            <span><strong>MeuGDF</strong> - Feito para os servidores do DF</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+        Enviar voto
+      </button>
+    </form>
+  </div>
+</body>
+</html>

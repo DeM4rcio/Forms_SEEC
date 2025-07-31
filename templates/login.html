@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background:
+                radial-gradient(#1f2c5d 49%, #0000 50%) calc(100px/-2) calc(100px/2),
+                repeating-conic-gradient(from 45deg, #ffffff 0 25%, #0000 0 50%) calc(100px/2) calc(100px/2),
+                radial-gradient(#1f2c5d 49%, #0000 50%),
+                radial-gradient(#1f2c5d 49%, #0000 50%) 100px 100px #ffffff;
+            background-size: calc(2*100px) calc(2*100px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100/60 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-xl">
+
+        <div class="flex justify-center mb-8">
+            <img src="logo.png" alt="Logo" class="h-20 w-auto">
+        </div>
+
+        <h2 class="text-3xl font-bold mb-6 text-center text-blue-700">Entrar</h2>
+
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" required
+                    class="mt-1 block w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+                <input type="password" id="password" name="password" required
+                    class="mt-1 block w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-medium">Entrar</button>
+            <div id="message" class="mt-4 text-center"></div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('password').value;
+            const messageDiv = document.getElementById('message');
+
+            const payload = {
+                Email: email,
+                Senha: senha
+            };
+
+            messageDiv.innerHTML = 'Aguarde...';
+            messageDiv.className = 'mt-4 text-center text-blue-600';
+
+            try {
+                const response = await fetch('/autenticar_usuario/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    messageDiv.innerHTML = 'Login bem-sucedido! Redirecionando...';
+                    messageDiv.className = 'mt-4 text-center text-green-600 font-bold';
+                    window.location.href = '/formulario/'; // Redireciona para a view de formulário
+                } else {
+                    messageDiv.innerHTML = data.message || 'Erro ao fazer login.';
+                    messageDiv.className = 'mt-4 text-center text-red-600 font-bold';
+                }
+
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                messageDiv.innerHTML = 'Ocorreu um erro interno. Tente novamente mais tarde.';
+                messageDiv.className = 'mt-4 text-center text-red-600 font-bold';
+            }
+        });
+    </script>
+</body>
+</html>
