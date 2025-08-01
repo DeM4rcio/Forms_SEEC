@@ -102,7 +102,7 @@ def autenticar_usuario(request):
         return JsonResponse({'success': False, 'message': f'Erro de conexão com o servidor LDAP: {e}'}, status=500)
     except Exception as e:
         print("Erro na autenticação:", e)
-        return JsonResponse({'success': False, 'message': 'Erro interno ao autenticar. Tente novamente mais tarde.'}, status=500)
+        return JsonResponse({'success': False, 'message': f'Erro interno ao autenticar. Tente novamente mais tarde.{e}'}, status=500)
 
 @login_required(login_url='login')  
 def formulario_view(request):
