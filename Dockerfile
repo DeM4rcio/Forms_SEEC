@@ -1,6 +1,6 @@
 # ----- ESTÁGIO 1: Imagem de Build -----
 # Usa uma imagem oficial do Python como base
-FROM python:3.11-slim as build
+FROM python:3.11-slim AS build
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
@@ -43,4 +43,4 @@ COPY .env .env
 EXPOSE 8888
 
 # Comando para rodar a aplicação usando Gunicorn
-CMD ["gunicorn",  "0.0.0.0:8888", "app.wsgi"]
+CMD ["gunicorn", "app.wsgi:application", "-b", "0.0.0.0:8888"]
