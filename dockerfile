@@ -15,7 +15,6 @@ RUN apt-get update \
 COPY requirements.txt .
 
 # Instala as dependências do Python
-# O flag --no-cache-dir garante que o pip não armazene arquivos de cache, economizando espaço
 RUN pip install --no-cache-dir -r requirements.txt
 
 
@@ -28,17 +27,20 @@ WORKDIR /app
 
 # Copia as bibliotecas instaladas do estágio de build
 COPY --from=build /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-COPY --from=build /usr/local/bin/gunicorn /usr/local/bin/  
+
 # Copia todo o código da sua aplicação para o contêiner
 COPY . .
 
+# *** NOVO PASSO: Instalar gunicorn diretamente na imagem final ***
+# Isso garante que o executável estará disponível.
+RUN pip install gunicorn
+
 # Define as variáveis de ambiente (ajuste conforme necessário)
 ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE=app.settings  
+ENV DJANGO_SETTINGS_MODULE=app.settings  # Substitua 'seu_projeto'
 
-# Expõe a porta que o Gunicorn/Django irá ouvir (a porta padrão é 8000)
+# Expõe a porta que o Gunicorn/Django irá ouvir
 EXPOSE 8888
 
-# Comando para rodar a aplicação usando Gunicorn, um servidor WSGI para produção
-# Substitua 'seu_projeto.wsgi' pelo caminho correto do seu arquivo WSGI
+# Comando para rodar a aplicação usando Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:8888", "app.wsgi"]
