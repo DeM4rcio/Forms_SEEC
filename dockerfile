@@ -28,7 +28,7 @@ WORKDIR /app
 
 # Copia as bibliotecas instaladas do estágio de build
 COPY --from=build /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-
+COPY --from=build /usr/local/bin/gunicorn /usr/local/bin/  
 # Copia todo o código da sua aplicação para o contêiner
 COPY . .
 
