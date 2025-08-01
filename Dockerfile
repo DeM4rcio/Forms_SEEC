@@ -43,4 +43,4 @@ COPY .env .env
 EXPOSE 8888
 
 # Comando para rodar a aplicação usando Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8888", "app.wsgi"]
+CMD ["gunicorn",  "0.0.0.0:8888", "app.wsgi"]
