@@ -37,7 +37,7 @@ RUN pip install gunicorn
 
 # Define as variáveis de ambiente (ajuste conforme necessário)
 ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE=app.settings  # Substitua 'seu_projeto'
+ENV DJANGO_SETTINGS_MODULE=app.settings  
 
 # Expõe a porta que o Gunicorn/Django irá ouvir
 EXPOSE 8888
