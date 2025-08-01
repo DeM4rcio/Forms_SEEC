@@ -115,17 +115,24 @@ def autenticar_usuario(request):
 @login_required(login_url='login')  
 def formulario_view(request):
     try:
+        # Tenta encontrar a resposta do usuário logado
         resposta = RespostaUnica.objects.get(usuario=request.user)
-        return render(request, "formulario.html", {"resposta": resposta, "respondido": True})
+        # Se encontrou, renderiza a página com a resposta e um indicador de que já votou
+        return render(request, "pesquisa.html", {"resposta_do_usuario": resposta, "respondido": True})
     except RespostaUnica.DoesNotExist:
+        # Se o usuário ainda não votou
         if request.method == "POST":
-            # Aqui, o request.user já estará disponível
             form = FormularioEscolha(request.POST)
             if form.is_valid():
+                # Salva o formulário, mas não comita ainda para associar o usuário
                 nova_resposta = form.save(commit=False)
                 nova_resposta.usuario = request.user
                 nova_resposta.save()
                 return redirect("formulario")
+            else:
+                # Se o formulário for inválido, renderiza com o formulário e os erros
+                return render(request, "pesquisa.html", {"form": form, "respondido": False})
         else:
+            # Se for uma requisição GET, exibe o formulário vazio
             form = FormularioEscolha()
-        return render(request, "formulario.html", {"form": form, "respondido": False})
+        return render(request, "pesquisa.html", {"form": form, "respondido": False})
