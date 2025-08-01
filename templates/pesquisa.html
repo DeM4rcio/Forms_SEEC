@@ -19,9 +19,7 @@
 <body class="bg-gray-100/60 flex items-center justify-center min-h-screen p-4 ">
     <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-3xl">
 
-        <div class="flex justify-center mb-6">
-            <img src="logo.png" alt="Logo GDF" class="h-20 w-auto">
-        </div>
+       
 
         <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">
             Ajude a escolher o nome do novo App do Servidor GDF
@@ -46,34 +44,33 @@
         {% if respondido %}
             <div class="text-center text-gray-800">
                 <h3 class="text-xl font-bold mb-4">Obrigado por participar!</h3>
-                <p>Você já votou no nome <strong>"{{ resposta_do_usuario.nome_app }}"</strong>.</p>
+              
                 <p class="mt-4">Sua participação é muito importante para nós!</p>
             </div>
         {% else %}
-            <form action="{% url 'formulario' %}" method="POST" class="space-y-6">
-                {% csrf_token %}
-                <fieldset>
-                    <legend class="text-base font-semibold text-gray-800 mb-4">1. Então, qual nome você escolhe para o App?</legend>
-                    <div class="space-y-3">
-                        {% for radio in form.nome_app %}
-                            <label class="flex items-start space-x-2">
-                                {{ radio.tag }}
-                                <span>{{ radio.choice_label }}</span>
-                            </label>
-                        {% endfor %}
-                    </div>
-                </fieldset>
-
-                {% if form.errors %}
-                    <div class="text-red-500">
-                        <p>Por favor, selecione uma opção.</p>
-                    </div>
-                {% endif %}
-
-                <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-                    Enviar voto
-                </button>
-            </form>
+        <form action="{% url 'formulario' %}" method="POST" class="space-y-6">
+          {% csrf_token %}
+          <fieldset>
+              <legend class="text-base font-semibold text-gray-800 mb-4">1. Então, qual nome você escolhe para o App?</legend>
+              <div class="space-y-3">
+                  {% for radio in form.opcao %} <label class="flex items-start space-x-2">
+                          {{ radio.tag }}
+                          <span>{{ radio.choice_label }}</span>
+                      </label>
+                  {% endfor %}
+              </div>
+          </fieldset>
+      
+          {% if form.errors %}
+              <div class="text-red-500">
+                  <p>Por favor, selecione uma opção.</p>
+              </div>
+          {% endif %}
+      
+          <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+              Enviar voto
+          </button>
+      </form> 
         {% endif %}
 
     </div>
