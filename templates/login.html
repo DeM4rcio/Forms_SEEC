@@ -7,12 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background:
-                radial-gradient(#1f2c5d 49%, #0000 50%) calc(100px/-2) calc(100px/2),
-                repeating-conic-gradient(from 45deg, #ffffff 0 25%, #0000 0 50%) calc(100px/2) calc(100px/2),
-                radial-gradient(#1f2c5d 49%, #0000 50%),
-                radial-gradient(#1f2c5d 49%, #0000 50%) 100px 100px #ffffff;
-            background-size: calc(2*100px) calc(2*100px);
+          background-image: url('{% static "fundo.png" %}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
         }
     </style>
 </head>
@@ -20,7 +18,10 @@
     <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-xl">
 
        
-
+        <!-- Logo -->
+        <div class="flex justify-center mb-8">
+            <img src="{% static 'logo.png' %}" alt="Logo" class="h-20 w-auto">
+        </div>
         <h2 class="text-3xl font-bold mb-6 text-center text-blue-700">Entrar</h2>
 
         <form id="login-form" class="space-y-6">

@@ -7,12 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background:
-                radial-gradient(#1f2c5d 49%,#0000 50%) calc(100px/-2) calc(100px/2),
-                repeating-conic-gradient(from 45deg,#ffffff 0 25%,#0000 0 50%)
-                calc(100px/2) calc(100px/2),
-                radial-gradient(#1f2c5d 49%,#0000 50%),radial-gradient(#1f2c5d 49%,#0000 50%) 100px 100px #ffffff;
-            background-size: calc(2*100px) calc(2*100px);
+          background-image: url('{% static "fundo.png" %}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
         }
     </style>
 </head>
@@ -20,6 +18,9 @@
     <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-3xl">
 
        
+        <div class="flex justify-center mb-6">
+        <img src="{% static 'logo.png' %}" alt="Logo GDF" class="h-20 w-auto">
+        </div>
 
         <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">
             Ajude a escolher o nome do novo App do Servidor GDF
@@ -38,7 +39,7 @@
         </p>
 
         <p class="text-gray-800 mb-6">
-            E como esse app é feito para você, nada mais justo do que você também ajudar a dar um nome a ele! Escolha abaixo o nome que você acha que mais combina com essa nova ferramenta de modernização e valorização dos servidores do GDF. 🗓️ Você pode votar até o dia <strong>01 de agosto de 2025</strong>. Contamos com a sua participação!
+            E como esse app é feito para você, nada mais justo do que você também ajudar a dar um nome a ele! Escolha abaixo o nome que você acha que mais combina com essa nova ferramenta de modernização e valorização dos servidores do GDF. 🗓️ Você pode votar até o dia <strong>15 de agosto de 2025</strong>. Contamos com a sua participação!
         </p>
 
         {% if respondido %}
