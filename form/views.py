@@ -112,7 +112,7 @@ def autenticar_usuario(request):
         print("Erro na autenticação:", e)
         return JsonResponse({'success': False, 'message': f'Erro interno ao autenticar. Tente novamente mais tarde.'}, status=500)
 
-@login_required(login_url='login')  
+#@login_required(login_url='login')  
 def formulario_view(request):
     try:
         # Tenta encontrar a resposta do usuário logado
