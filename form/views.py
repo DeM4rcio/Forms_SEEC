@@ -25,7 +25,6 @@ from ldap3.core.exceptions import LDAPBindError, LDAPExceptionError
 
 def login_view(request):
     return render(request, 'login.html')
-
 @csrf_exempt
 def autenticar_usuario(request):
     if request.method != 'POST':
@@ -44,37 +43,43 @@ def autenticar_usuario(request):
             dominio = "SEAP"
             ldap_server = Server(settings.LDAP_SERVER, get_info=ALL)
             base_dn = 'dc=seap,dc=gdfnet,dc=df'
-            servico_user = f"{dominio}\\{settings.LDAP_USERNAME.split('@')[0]}"
+            servico_user = settings.LDAP_USERNAME # UPN do usuário de serviço
             servico_pass = settings.LDAP_PASSWORD
         elif "@gdfnet.df.gov.br" in email:
             dominio = "GDFNET"
             ldap_server = Server(settings.LDAP_SERVER_NET, get_info=ALL)
             base_dn = 'dc=gdfnet,dc=df'
-            servico_user = f"{dominio}\\{settings.LDAP_USERNAME_NET.split('@')[0]}"
+            servico_user = settings.LDAP_USERNAME_NET # UPN do usuário de serviço
             servico_pass = settings.LDAP_PASSWORD_NET
         else:
             return JsonResponse({'success': False, 'message': 'Domínio de e-mail não reconhecido.'}, status=400)
 
         # 2. Conexão com o usuário de serviço para buscar o DN do usuário
-        with Connection(
-            ldap_server,
-            user=servico_user,
-            password=servico_pass,
-            authentication=NTLM,
-            auto_bind=True
-        ) as conn:
-            conn.search(
-                search_base=base_dn,
-                search_filter=f'(sAMAccountName={email.split("@")[0]})',
-                search_scope=SUBTREE,
-                attributes=ALL_ATTRIBUTES
-            )
+        # Removendo 'authentication=NTLM' e ajustando 'user' para o UPN
+        try:
+            with Connection(
+                ldap_server,
+                user=servico_user,
+                password=servico_pass,
+                auto_bind=True
+            ) as conn:
+                conn.search(
+                    search_base=base_dn,
+                    search_filter=f'(sAMAccountName={email.split("@")[0]})',
+                    search_scope=SUBTREE,
+                    attributes=ALL_ATTRIBUTES
+                )
 
-            if not conn.entries:
-                return JsonResponse({'success': False, 'message': 'Usuário não encontrado.'}, status=404)
+                if not conn.entries:
+                    return JsonResponse({'success': False, 'message': 'Usuário não encontrado.'}, status=404)
 
-            user_entry = conn.entries[0]
-            user_dn = user_entry.entry_dn
+                user_entry = conn.entries[0]
+                user_dn = user_entry.entry_dn
+
+        except LDAPBindError as e:
+            # Erro na conexão do usuário de serviço
+            print("Erro na conexão do usuário de serviço:", e)
+            return JsonResponse({'success': False, 'message': 'Erro ao conectar com o servidor LDAP. Verifique as credenciais de serviço.'}, status=500)
 
         # 3. Tentativa de autenticação com a senha do usuário
         try:
@@ -102,8 +107,7 @@ def autenticar_usuario(request):
         return JsonResponse({'success': False, 'message': f'Erro de conexão com o servidor LDAP: {e}'}, status=500)
     except Exception as e:
         print("Erro na autenticação:", e)
-        return JsonResponse({'success': False, 'message': f'Erro interno ao autenticar. Tente novamente mais tarde.{e}'}, status=500)
-
+        return JsonResponse({'success': False, 'message': f'Erro interno ao autenticar. Tente novamente mais tarde.'}, status=500)
 @login_required(login_url='login')  
 def formulario_view(request):
     try:
